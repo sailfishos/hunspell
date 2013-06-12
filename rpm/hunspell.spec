@@ -38,7 +38,7 @@ cat << \EOF > %{name}-req
   sed -e '/perl(explicitely)/d'
 EOF
 
-%define __perl_requires %{_builddir}/%{name}/%{name}-req
+%define __perl_requires %{_builddir}/%{name}-%{version}/%{name}/%{name}-req
 
 chmod +x %{__perl_requires}
 
