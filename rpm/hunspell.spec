@@ -27,7 +27,7 @@ Group: Development/Libraries
 Includes and definitions for developing with hunspell
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%setup -q -n %{name}-%{version}/hunspell
 %patch1 -p1 -b .ispell-alike.patch
 # Filter unwanted Requires for the "use explicitely" string in ispellaff2myspell
 cat << \EOF > %{name}-req
@@ -36,7 +36,7 @@ cat << \EOF > %{name}-req
   sed -e '/perl(explicitely)/d'
 EOF
 
-%define __perl_requires %{_builddir}/%{name}-%{version}/%{name}-req
+%define __perl_requires %{_builddir}/%{name}/%{name}-req
 chmod +x %{__perl_requires}
 
 %build
