@@ -28,8 +28,20 @@ Includes and definitions for developing with hunspell
 
 %prep
 %setup -q -n %{name}-%{version}/hunspell
+%patch1 -p1 -b .ispell-alike.patch
 
 %build
+# Filter unwanted Requires for the "use explicitely" string in ispellaff2myspell
+cat << \EOF > %{name}-req
+#!/bin/sh
+%{__perl_requires} $* |\
+  sed -e '/perl(explicitely)/d'
+EOF
+
+%define __perl_requires %{_builddir}/%{name}/%{name}-req
+
+chmod +x %{__perl_requires}
+
 %reconfigure --disable-static  --with-ui --with-readline
 for i in man/*.? man/hu/*.?; do
     iconv -f ISO-8859-2 -t UTF-8 $i > $i.new
