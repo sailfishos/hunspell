@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # -*- coding: iso-8859-1 -*-
-#   $Id: ispellaff2myspell,v 1.29 2005/07/04 12:21:55 agmartin Exp $
+# 	$Id: ispellaff2myspell,v 1.29 2005/07/04 12:21:55 agmartin Exp $
 # 
 #   (C) 2002-2005 Agustin Martin Domingo <agustin.martin@hispalinux.es> 
 # 
@@ -24,23 +24,23 @@ sub usage {
 (C) 2002-2005 Agustin Martin Domingo <agustin.martin\@hispalinux.es>         License: GPL
 
 Usage:
-    ispellaff2myspell [options] <affixfile>
+	ispellaff2myspell [options] <affixfile>
 
       Options:
-    --affixfile=s      Affix file
-    --bylocale         Use current locale setup for upper/lowercase 
+	--affixfile=s      Affix file
+	--bylocale         Use current locale setup for upper/lowercase 
                            conversion
-    --charset=s        Use specified charset for upper/lowercase 
+	--charset=s        Use specified charset for upper/lowercase 
                            conversion (defaults to latin1)
-    --debug            Print debugging info
-    --extraflags       Allow some non alphabetic flags
-    --lowercase=s      Lowercase string
+ 	--debug            Print debugging info
+ 	--extraflags       Allow some non alphabetic flags
+	--lowercase=s      Lowercase string
         --myheader=s       Header file
-    --printcomments    Print commented lines in output 
+	--printcomments    Print commented lines in output 
         --replacements=s   Replacements file 
         --split=i          Split flags with more that i entries
-    --uppercase=s      Uppercase string
-    --wordlist=s       Still unused
+	--uppercase=s      Uppercase string
+	--wordlist=s       Still unused
 
   Currently allowed valued for charset are: latin1, latin2, latin3
 
@@ -56,31 +56,31 @@ should do the work, with mydict.words+ being the ispell munched wordlist
 
 sub debugprint {
     if ( $debug ){
-    print STDERR "@_";
+	print STDERR "@_";
     }
 }
 
 sub shipoutflag{
     my $flag_entries=scalar @flag_array;
-    
+	
     if ( $flag_entries != 0 ){
-    if ( $split ){
-        while ( @flag_array ){
-        my @flag_subarray=splice(@flag_array,0,$split);
-        my $subflag_entries=scalar @flag_subarray;
-        if ( scalar @flag_array ){
-            print "$myaffix $flagname $flagcombine $subflag_entries S\n";
-        } else {
-            print "$myaffix $flagname $flagcombine $subflag_entries\n";
-        }
-        print join("\n",@flag_subarray);
-        print "\n\n";
-        }
-    } else {
-        print "$myaffix $flagname $flagcombine $flag_entries\n";
-        print join("\n",@flag_array);
-        print "\n\n";
-    }
+	if ( $split ){
+	    while ( @flag_array ){
+		my @flag_subarray=splice(@flag_array,0,$split);
+		my $subflag_entries=scalar @flag_subarray;
+		if ( scalar @flag_array ){
+		    print "$myaffix $flagname $flagcombine $subflag_entries S\n";
+		} else {
+		    print "$myaffix $flagname $flagcombine $subflag_entries\n";
+		}
+		print join("\n",@flag_subarray);
+		print "\n\n";
+	    }
+	} else {
+	    print "$myaffix $flagname $flagcombine $flag_entries\n";
+	    print join("\n",@flag_array);
+	    print "\n\n";
+	}
     }
     @flag_array=();
     $flagname='';
@@ -92,37 +92,37 @@ sub mylc{
     my $outputstring;
 
     if ( $bylocale ){
-    { 
-        use locale;
-        $outputstring =  lc $inputstring;
-    }
+	{ 
+	    use locale;
+	    $outputstring =  lc $inputstring;
+	}
     } else {
-    if ( $charset eq "latin0" ){
-        $lowercase='a-z';
-        $uppercase='A-ZŞ¼';
-    } elsif ( $charset eq "latin1" ){
-        $lowercase='a-z';
-        $uppercase='A-Z';
-    } elsif ( $charset eq "latin2" ){
-        $lowercase='a-z';
-        $uppercase='A-Z';
-    } elsif ( $charset eq "latin3" ){
-        $lowercase='a-z';
-        $uppercase='A-Z';
-#   } elsif ( $charset eq "other_charset" ){
-#       die "latin2 still unimplemented";
-    } else {
-        if ( not $lowercase and not $uppercase ){
-        die "Unsupported charset [$charset]
+	if ( $charset eq "latin0" ){
+	    $lowercase='a-zàáâãäåæçèéêëìíîïğñòóôõöøùúûüış½¨¸';
+	    $uppercase='A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞ¼¦´';
+	} elsif ( $charset eq "latin1" ){
+	    $lowercase='a-zàáâãäåæçèéêëìíîïğñòóôõöøùúûüış';
+	    $uppercase='A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞ';
+	} elsif ( $charset eq "latin2" ){
+	    $lowercase='a-z±³µ¶¹º»¼¾¿àáâãäåæçèéêëìíîïğñòóôõöøùúûüış';
+	    $uppercase='A-Z¡£¥¦©ª«¬®¯ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞ';
+	} elsif ( $charset eq "latin3" ){
+	    $lowercase='a-z±¶¹º»¼¿àáâäåæçèéêëìíîïñòóôõö÷øùúûüış';
+	    $uppercase='A-Z¡¦©ª«¬¯ÀÁÂÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖ×ØÙÚÛÜİŞ';
+#	} elsif ( $charset eq "other_charset" ){
+#	    die "latin2 still unimplemented";
+	} else {
+	    if ( not $lowercase and not $uppercase ){
+		die "Unsupported charset [$charset]
 
 use explicitely --lowercase=string and --uppercase=string
 options. Remember that both string must match exactly, but 
 case changed.
 ";
-        }
-    }
-    $outputstring=$inputstring;
-    eval "\$outputstring=~tr/$uppercase/$lowercase/";
+	    }
+	}
+	$outputstring=$inputstring;
+	eval "\$outputstring=~tr/$uppercase/$lowercase/";
     }
     return $outputstring;
 }
@@ -130,14 +130,14 @@ case changed.
 sub validate_flag (){
     my $flag = shift;
     if ($flag=~m/[a-zA-Z]+/){
-    return $flag;
+	return $flag;
     } elsif ( $hasextraflags ){
-    foreach ( keys %theextraflags ){
-        if ($flag =~ m/^$_/){
-        $flag =~ s/^$_//;
-        return $flag;
-        } 
-    }
+	foreach ( keys %theextraflags ){
+	    if ($flag =~ m/^$_/){
+		$flag =~ s/^$_//;
+		return $flag;
+	    } 
+	}
     } 
     return '';
 }
@@ -147,20 +147,20 @@ sub process_replacements{
     my @replaces = ();
     
     open (REPLACE,"< $file") || 
-    die "Error: Could not open replacements file: $file\n";
+	die "Error: Could not open replacements file: $file\n";
     while (<REPLACE>){
-    next unless m/^REP[\s\t]*\D.*/;
-    next if m/^REP\s+[0-9]+/;
-    s/\015\012//;
-    s/\015//;
-    chomp;
-    push @replaces, $_;
+	next unless m/^REP[\s\t]*\D.*/;
+	next if m/^REP\s+[0-9]+/;
+	s/\015\012//;
+	s/\015//;
+	chomp;
+	push @replaces, $_;
     }
     close REPLACE;
     my $number = scalar @replaces;
     print "REP $number\n";
     foreach ( @replaces ){
-    print $_ . "\n";
+	print $_ . "\n";
     }
 }
 
@@ -196,21 +196,21 @@ $flagcombine   = '';
 $inflags       = '';
 
 GetOptions ('affixfile=s'   => \$affixfile,
-        'bylocale'      => \$bylocale,
-        'charset=s'     => \$charset,
-        'debug'         => \$debug,
-        'extraflags:s'  => sub {
-        $hasextraflags = 1;
-        shift;
-        $theflag = shift;
-        $theextraflags{$theflag}++ if $theflag},
-        'lowercase=s'   => \$lowercase,
-        'myheader=s'    => \$myheader,
-        'printcomments' => \$printcomments,
-        'replacements=s'=> \$replacements,
-        'split=i'       => \$split,
-        'uppercase=s'   => \$uppercase,
-        'wordlist=s'    => \$wordlist) or usage;
+	    'bylocale'      => \$bylocale,
+	    'charset=s'     => \$charset,
+	    'debug'         => \$debug,
+	    'extraflags:s'  => sub {
+		$hasextraflags = 1;
+		shift;
+		$theflag = shift;
+		$theextraflags{$theflag}++ if $theflag},
+	    'lowercase=s'   => \$lowercase,
+	    'myheader=s'    => \$myheader,
+	    'printcomments' => \$printcomments,
+	    'replacements=s'=> \$replacements,
+	    'split=i'       => \$split,
+	    'uppercase=s'   => \$uppercase,
+	    'wordlist=s'    => \$wordlist) or usage;
 
 if ( not $affixfile ){
     $affixfile=shift or usage;
@@ -242,79 +242,79 @@ if ( $myheader ){
 while (<AFFIXFILE>){
     chomp;
     if (/^\s*\#.*/){
-    debugprint "Ignoring line $.\n";
-    print "$_\n" if $printcomments;
+	debugprint "Ignoring line $.\n";
+	print "$_\n" if $printcomments;
     } elsif (/^\s*$/){
-    debugprint "Ignoring line $.\n";
+	debugprint "Ignoring line $.\n";
     } elsif (/^\s*prefixes/){
-    debugprint "Prefixes starting in line $.\n";
-    $affix="PFX";
+	debugprint "Prefixes starting in line $.\n";
+	$affix="PFX";
     } elsif (/^\s*suffixes/){
-    debugprint "Suffixes starting in line $.\n";
-    $affix="SFX";
+	debugprint "Suffixes starting in line $.\n";
+	$affix="SFX";
     } elsif (/^[\s\t]*flag.*/){
-    next if not $affix;         # In case we are still in the preamble
-    shipoutflag if $inflags;
-    $inflags="yes";
-    s/^[\s\t]*flag[\s\t]*//;
-    s/[\s\t]*:.*$//;
-    debugprint "Found flag $_ in line $.\n";
-    
-    if (/\*/){
-        s/[\*\s]//g;
-        $flagcombine="Y";
-        debugprint "Flag renamed to $_ with combine=$flagcombine\n";
-    } else {
-        $flagcombine="N";
-    }
-    
-    if ( $flagname = &validate_flag($_) ){
-        $myaffix  = $affix;
-    } else {
-        $myaffix  = "\# $affix";
-        $flagname = $_;
-        print STDERR "Ignoring invalid flag $flagname in line $.\n";
-    }
+	next if not $affix;         # In case we are still in the preamble
+	shipoutflag if $inflags;
+	$inflags="yes";
+	s/^[\s\t]*flag[\s\t]*//;
+	s/[\s\t]*:.*$//;
+	debugprint "Found flag $_ in line $.\n";
+	
+	if (/\*/){
+	    s/[\*\s]//g;
+	    $flagcombine="Y";
+	    debugprint "Flag renamed to $_ with combine=$flagcombine\n";
+	} else {
+	    $flagcombine="N";
+	}
+	
+	if ( $flagname = &validate_flag($_) ){
+	    $myaffix  = $affix;
+	} else {
+	    $myaffix  = "\# $affix";
+	    $flagname = $_;
+	    print STDERR "Ignoring invalid flag $flagname in line $.\n";
+	}
     } elsif ( $affix and $inflags ) {
-    ($rootname,@comments)   =  split('#',$_);
-    $comment                =  '# ' . join('#',@comments);
-    
-    $rootname               =~ s/\s*//g;
-    $rootname               =  mylc $rootname;
-    ($rootname,$addtoroot)  =  split('>',$rootname);
-    
-    if ( $addtoroot =~ s/^\-//g ){
-        ($rootremove,$addtoroot)  = split(',',$addtoroot);
-        $addtoroot                = "0" unless $addtoroot;
-        $addtoroot                = "0" if ( $addtoroot eq "-");
-    } else {
-        $rootremove = "0";
-    }
-    $addtoroot =~ s/\\\-/\-/g; # prefix ANTI\- to anti-
+	($rootname,@comments)   =  split('#',$_);
+	$comment                =  '# ' . join('#',@comments);
+	
+	$rootname               =~ s/\s*//g;
+	$rootname               =  mylc $rootname;
+	($rootname,$addtoroot)  =  split('>',$rootname);
+	
+	if ( $addtoroot =~ s/^\-//g ){
+	    ($rootremove,$addtoroot)  = split(',',$addtoroot);
+	    $addtoroot                = "0" unless $addtoroot;
+	    $addtoroot                = "0" if ( $addtoroot eq "-");
+	} else {
+	    $rootremove = "0";
+	}
+	$addtoroot =~ s/\\\-/\-/g; # prefix ANTI\- to anti-
 
-    if ( $rootname eq '.' && $rootremove ne "0" ){
-        $rootname = $rootremove;
-    }
-    
-    debugprint "$rootname, $addtoroot, $rootremove\n";
-    if ( $printcomments ){
-        $affix_line=sprintf("%s %s   %-5s %-11s %-24s %s",
-                $myaffix, $flagname, $rootremove, 
-                $addtoroot, $rootname, $comment);
+	if ( $rootname eq '.' && $rootremove ne "0" ){
+	    $rootname = $rootremove;
+	}
+	
+	debugprint "$rootname, $addtoroot, $rootremove\n";
+	if ( $printcomments ){
+	    $affix_line=sprintf("%s %s   %-5s %-11s %-24s %s",
+				$myaffix, $flagname, $rootremove, 
+				$addtoroot, $rootname, $comment);
+	} else {
+	    $affix_line=sprintf("%s %s   %-5s %-11s %s",
+				$myaffix, $flagname, $rootremove, 
+				$addtoroot, $rootname);
+	}
+	$rootremove = "0";
+	$rootname   = '';
+	$addtoroot  = '';
+	$comment    = '';
+	@comments   = ();
+	push @flag_array,$affix_line;
+	debugprint "$affix_line\n";
     } else {
-        $affix_line=sprintf("%s %s   %-5s %-11s %s",
-                $myaffix, $flagname, $rootremove, 
-                $addtoroot, $rootname);
-    }
-    $rootremove = "0";
-    $rootname   = '';
-    $addtoroot  = '';
-    $comment    = '';
-    @comments   = ();
-    push @flag_array,$affix_line;
-    debugprint "$affix_line\n";
-    } else {
-    #
+	#
     }
 }
 shipoutflag;
@@ -442,8 +442,8 @@ If your encoding is currently unsupported you can send me a file with
 the two strings of lower and uppercase chars. Note that they must match 
 exactly but case changed. It will look something like
 
-  $lowercase='a-z';
-  $uppercase='A-Z';
+  $lowercase='a-zàáâãäåæçèéêëìíîïğñòóôõöøùúûüış';
+  $uppercase='A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞ';
 
 =head1 SEE ALSO
 
@@ -470,4 +470,3 @@ in your Debian system.
 Agustin Martin <agustin.martin@hispalinux.es>
 
 =cut
-

@@ -36,4 +36,3 @@ cat $1 | sed '/^$/d' | wc -l > $2.dic
 LC_ALL=C sort $1 | sed '/^$/d' >> $2.dic
 
 echo Basic $2.dic and $2.aff created
-
