@@ -27,6 +27,7 @@ Hunspell tools
 
 
 %package devel
+Requires: %{name} = %{version}
 Requires: pkgconfig
 Summary: Files for developing with hunspell
 Group: Development/Libraries
@@ -38,12 +39,9 @@ Includes and definitions for developing with hunspell
 %setup -q -n %{name}-%{version}/hunspell
 
 %build
-%{__make} clean || true
 
 autoreconf -vfi
 
-CFLAGS="$CFLAGS -fPIC"
-CXXFLAGS="$CXXFLAGS -fPIC"
 %configure 
 make %{?_smp_mflags}
 
@@ -61,17 +59,24 @@ make %{?_smp_mflags}
 
 %files 
 %defattr(-,root,root,-)
-%doc README README.myspell COPYING COPYING.LESSER COPYING.MPL AUTHORS AUTHORS.myspell license.hunspell license.myspell THANKS
+%doc COPYING COPYING.LESSER COPYING.MPL
 %{_libdir}/*.so.*
-%{_libdir}/*.so
 %{_bindir}/hunspell
 
 %files devel
 %defattr(-,root,root,-)
+%doc README README.md README.myspell AUTHORS AUTHORS.myspell license.hunspell license.myspell THANKS
 %{_includedir}/%{name}
+%{_libdir}/*.so
 %{_libdir}/*.a
 %{_libdir}/*.la
 %{_libdir}/pkgconfig/hunspell.pc
+%exclude %{_mandir}/man1/hunspell.1.gz
+%exclude %{_mandir}/man1/hunzip.1.gz
+%exclude %{_mandir}/man1/hzip.1.gz
+%exclude %{_mandir}/man3/hunspell.3.gz
+%exclude %{_mandir}/man5/hunspell.5.gz
+%exclude %{_mandir}/hu/man1/hunspell.1.gz
 
 %files tools
 %{_bindir}/affixcompress
@@ -85,10 +90,4 @@ make %{?_smp_mflags}
 %{_bindir}/ispellaff2myspell
 %{_bindir}/wordlist2hunspell
 %{_bindir}/wordforms
-%{_mandir}/man1/hunspell.1.gz
-%{_mandir}/man1/hunzip.1.gz
-%{_mandir}/man1/hzip.1.gz
-%{_mandir}/man3/hunspell.3.gz
-%{_mandir}/man5/hunspell.5.gz
-%lang(hu) %{_mandir}/hu/man1/hunspell.1.gz
 
