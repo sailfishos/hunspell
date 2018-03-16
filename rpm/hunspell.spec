@@ -68,8 +68,8 @@ make %{?_smp_mflags}
 %doc README README.md README.myspell AUTHORS AUTHORS.myspell license.hunspell license.myspell THANKS
 %{_includedir}/%{name}
 %{_libdir}/*.so
-%{_libdir}/*.la
 %{_libdir}/pkgconfig/hunspell.pc
+%exclude %{_libdir}/*.la
 %exclude %{_libdir}/*.a
 %exclude %{_mandir}/man1/hunspell.1.gz
 %exclude %{_mandir}/man1/hunzip.1.gz
