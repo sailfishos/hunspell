@@ -35,6 +35,16 @@ Group: Development/Libraries
 %description devel
 Includes and definitions for developing with hunspell
 
+
+%package doc
+Summary:   Documentation for %{name}
+Group:     Documentation
+Requires:  %{name} = %{version}-%{release}
+
+%description doc
+Man pages for %{name}.
+
+
 %prep
 %setup -q -n %{name}-%{version}/hunspell
 
@@ -50,6 +60,10 @@ make %{?_smp_mflags}
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR=%{buildroot}
 
+mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
+install -m0644 -t %{buildroot}%{_docdir}/%{name}-%{version} \
+        README README.md README.myspell AUTHORS AUTHORS.myspell THANKS
+
 %clean
 %{__rm} -rf %{buildroot}
 
@@ -59,24 +73,18 @@ make %{?_smp_mflags}
 
 %files 
 %defattr(-,root,root,-)
-%doc COPYING COPYING.LESSER COPYING.MPL
+%license COPYING COPYING.LESSER COPYING.MPL
 %{_libdir}/*.so.*
 %{_bindir}/hunspell
 
 %files devel
 %defattr(-,root,root,-)
-%doc README README.md README.myspell AUTHORS AUTHORS.myspell license.hunspell license.myspell THANKS
+%license license.hunspell license.myspell
 %{_includedir}/%{name}
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/hunspell.pc
 %exclude %{_libdir}/*.la
 %exclude %{_libdir}/*.a
-%exclude %{_mandir}/man1/hunspell.1.gz
-%exclude %{_mandir}/man1/hunzip.1.gz
-%exclude %{_mandir}/man1/hzip.1.gz
-%exclude %{_mandir}/man3/hunspell.3.gz
-%exclude %{_mandir}/man5/hunspell.5.gz
-%exclude %{_mandir}/hu/man1/hunspell.1.gz
 
 %files tools
 %{_bindir}/affixcompress
@@ -91,3 +99,8 @@ make %{?_smp_mflags}
 %{_bindir}/wordlist2hunspell
 %{_bindir}/wordforms
 
+%files doc
+%defattr(-,root,root,-)
+%{_mandir}/man*/h*.*
+%exclude %{_mandir}/hu/man1/hunspell.1.gz
+%{_docdir}/%{name}-%{version}
