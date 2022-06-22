@@ -4,7 +4,7 @@ Version:   1.6.2
 Release:   1
 Source0:   %{name}-%{version}.tar.bz2
 Group:     System/Libraries
-URL:       http://hunspell.github.io/
+URL:       https://github.com/sailfishos/hunspell
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 License:   LGPLv2+ or GPLv2+ or MPLv1.1
 BuildRequires: libtool, autoconf, automake, ncurses-devel
