@@ -3,7 +3,6 @@ Summary:   A spell checker and morphological analyzer library
 Version:   1.6.2
 Release:   1
 Source0:   %{name}-%{version}.tar.bz2
-Group:     System/Libraries
 URL:       https://github.com/sailfishos/hunspell
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 License:   LGPLv2+ or GPLv2+ or MPLv1.1
@@ -20,7 +19,6 @@ interface, C++ class and C functions.
 %package tools
 Requires: %{name} = %{version}
 Summary: Hunspell tools
-Group: System/Libraries
 
 %description tools
 Hunspell tools
@@ -30,7 +28,6 @@ Hunspell tools
 Requires: %{name} = %{version}
 Requires: pkgconfig
 Summary: Files for developing with hunspell
-Group: Development/Libraries
 
 %description devel
 Includes and definitions for developing with hunspell
@@ -38,7 +35,6 @@ Includes and definitions for developing with hunspell
 
 %package doc
 Summary:   Documentation for %{name}
-Group:     Documentation
 Requires:  %{name} = %{version}-%{release}
 
 %description doc
