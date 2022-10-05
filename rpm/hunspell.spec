@@ -1,12 +1,16 @@
 Name:      hunspell
 Summary:   A spell checker and morphological analyzer library
-Version:   1.6.2
+Version:   1.7.1
 Release:   1
 Source0:   %{name}-%{version}.tar.bz2
 URL:       https://github.com/sailfishos/hunspell
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 License:   LGPLv2+ or GPLv2+ or MPLv1.1
-BuildRequires: libtool, autoconf, automake, ncurses-devel
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: gettext-devel
+BuildRequires: libtool
+BuildRequires: ncurses-devel
 
 %description
 Hunspell is a spell checker and morphological analyzer
@@ -48,8 +52,8 @@ Man pages for %{name}.
 
 autoreconf -vfi
 
-%configure 
-make %{?_smp_mflags}
+%configure
+%make_build
 
 
 %install
@@ -58,7 +62,7 @@ make %{?_smp_mflags}
 
 mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
 install -m0644 -t %{buildroot}%{_docdir}/%{name}-%{version} \
-        README README.md README.myspell AUTHORS AUTHORS.myspell THANKS
+        README README.md AUTHORS THANKS
 
 %clean
 %{__rm} -rf %{buildroot}
